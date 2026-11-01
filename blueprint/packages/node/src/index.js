@@ -72,7 +72,7 @@ export { 操作持续目标 } from './持续工作.js'
 /** Cordis 插件名。 */
 export const name = 'blueprint-node'
 
-export const inject = ['tools', 'sessions', 'llm', 'agents', 'commands', 'fs', 'subprocess', 'web', 'tokenMeter', 'blueprintToolCatalog', 'subagents']
+export const inject = ['tools', 'sessions', 'llm', 'agents', 'commands', 'fs', 'subprocess', 'web', 'tokenMeter', 'blueprintToolCatalog', 'subagents', 'systemPrompt']
 
 /** 新项目使用持久化的默认位置；已有项目继续按自己的会话 cwd 工作。 */
 export { 项目夹 }
