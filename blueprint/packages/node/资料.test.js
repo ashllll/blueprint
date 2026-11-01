@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtemp, mkdir, readFile, readdir, writeFile, rm, symlink } from 'node:fs/promises'
+import { mkdtemp, mkdir, readFile, readdir, writeFile, rm, symlink, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, isAbsolute, relative } from 'node:path'
 import { Context } from '@deepseek-ai/cordis'
@@ -61,7 +61,7 @@ test('真实工具注册与执行：结构化返回也只含片段和文件地�
 })
 
 test('原生 cd 后网页正文、HTML 和回收入口均可直接重读；复用项目相对归档并保留原生历史身份', { timeout: 10000 }, async t => {
-  const root = await mkdtemp(join(项目路径, '资料原文目录入口核对-'))
+  const root = await realpath(await mkdtemp(join(项目路径, '资料原文目录入口核对-')))
   const first = join(root, '取材目录'), second = join(root, '继续工作目录')
   await mkdir(first); await mkdir(second)
   const ctx = new Context()
