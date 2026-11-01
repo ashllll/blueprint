@@ -119,6 +119,8 @@ npm --prefix app run smoke:render
 
 固定新版源码回归可用 `app/node_modules/node/bin/node --import './app/scripts/native-node-protocol-check.mjs?register' --test blueprint/packages/<包>/*.test.js`，它使用 App 依赖而不改现用 profile。`node app/scripts/source-profile-check.mjs` 只在临时目录检查源码装配。
 
+`node app/scripts/orchestration-check.mjs` 使用 App 锁定依赖与独立临时数据目录，核对纸条、事件等待、验证收据、任务分工、上下文回收和选择器缓存。Gitea `main` 的 gates 作业在 Node 24 上运行这组跨平台回归；它不替代既有 macOS／Seatbelt、桌面 smoke、安装包或真实长任务验收。
+
 系统全局 `dsh` 与 Blueprint 引擎独立升级。源码入口 `./dsh` 按本文件夹 `package.json` 的引擎版本选择 CLI，并使 profile 依赖指向同一引擎；全局版本不匹配时使用按版本隔离的 `app/.build/source-cli-<版本>/`；解析本身只读，`./dsh` 在实际启动时显式对齐 profile 依赖。缓存缺失时运行 `npm --prefix app run prepare:cli` 安装固定版本。桌面版仍由生产依赖和锁文件决定引擎版本。
 
 2026-10-12 核对：全局命令为 npm 默认发布版 `0.2.0-rc.2`；Blueprint 源码入口与新构建固定为 `0.2.1-alpha.2`。现用旧服务未重启，升级核验使用独立运行包。以下基础接缝已经适配：
