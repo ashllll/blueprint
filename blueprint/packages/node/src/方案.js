@@ -4,7 +4,7 @@ import { 是节点号, 标题下沉, 角色们, 节点档位们, 协作点们, �
 import { 执行者们, DeepSeek执行者 } from './子代理开关.js'
 
 // 派下级（10-27，派 9）：helm 和 dock 都用同一套六项——做什么（what）、之间的联系（link，共用的一段在 whole）、项目情境（situation，共用的在 shared）、
-// 工作等级（level）、同层分工（系统列，dock 可补 peers）、必要规则（rules）。任务边界、已确认的验收条件和证据入口要传下去；具体做法由下级判断。
+// 工作等级（level）、同层分工（系统列，dock 可补 peers）、必要规则（rules，大多数块是空的）。怎么做、怎么验不写，由下级判断。
 // 派出时要写的是 请求必填 加 level；登记只要 name、role、what 一句（needs、level 可写）。
 export const 分工字段 = ['name', 'what', 'link', 'situation', 'rules', 'peers']
 export const 请求必填 = ['name', 'what', 'link', 'situation']
@@ -29,7 +29,7 @@ export const 块格们 = Object.freeze(['key', 'id', 'name', 'role', 'level', 'd
 const Block参数 = { type: 'object', properties: {
   key: { type: 'string', minLength: 1, description: '新的一块：本表唯一的任务标识' },
   id: { type: 'string', description: '表上已有的块：派出登记着的、接着用同一阶段交回过的子 dock，或去掉一块' },
-  role: { type: 'string', enum: [...角色们], description: 'dock 或 run：里面还有几个整体、要再分的 dock；有明确边界、可独立验收结果的 run；过大的耦合任务分轮交付；外部 agent 只能是 run' },
+  role: { type: 'string', enum: [...角色们], description: 'dock 或 run：里面还有几个整体、要再分的 dock；一个整体的 run，再密再大也一样；外部 agent 只能是 run' },
   level: { type: 'string', enum: [...节点档位们], description: '工作等级：派出时写；叫回的不写照旧' },
   dispatch: { type: 'boolean', description: 'true 这一轮派出；false 只登记（name、role、expect 一句、needs）。不写算 true' },
   needs: { type: 'array', items: { type: 'string' }, description: '它依赖的 p 编号，也可以写同一份里的 key' },
