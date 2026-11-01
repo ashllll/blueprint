@@ -2,6 +2,12 @@
 
 The `verification` tool records an asynchronous native Bash run against an explicit project input manifest. It reports what the native job and declared inputs show; it never skips a check, marks acceptance complete, or returns a reusable decision.
 
+## When to use
+
+Use a receipt when a long check needs to be handed off or revisited. Existing checked summaries, logs, and CI results remain valid evidence; do not rerun a finished check just to create a receipt. Keep the returned job id and pending receipt while it runs, then collect the final receipt once.
+
+The node actually integrating the result compares it only when freshness needs checking, records the applicable scope and outstanding gaps in its existing checked handoff, and passes that conclusion onward. Later layers reuse that conclusion unless relevant inputs, commands, environment or integration conditions change; another handoff alone is not a reason to repeat compare, read full logs or rerun tests. Each compare fingerprints the declared inputs, so repeatedly calling it has real cost. Required project checks and user acceptance criteria still apply.
+
 ## Actions
 
 - `begin` requires the exact command and a non-empty `inputs` array. `workdir` resolves from the native current working directory (omitting it preserves that directory); every input resolves from the session project root; absolute paths are accepted only inside that root. Inputs may be files or directories. Symlink paths, explicit `.git` paths, and machine evidence inputs are rejected. Recursive directory fingerprints include names, contents, and executable bits; `.git` entries and the project-root `.blueprint-evidence` machine namespace are not traversed; other generated or untracked files remain inputs. Optional `environmentObservations` is a string map whose values are hashed and never stored in receipts.
